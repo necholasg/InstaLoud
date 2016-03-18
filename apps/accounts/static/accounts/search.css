@@ -1,0 +1,22 @@
+body {
+    background-color: #e0f2f1;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+
+#widget {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index:99;
+}
+
+#results {
+    padding-bottom:100px;
+}
+

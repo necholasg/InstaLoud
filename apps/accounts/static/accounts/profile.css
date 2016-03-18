@@ -1,0 +1,32 @@
+body{
+    background-color: #e0f2f1;
+    padding-bottom:120px;
+}
+
+#widget {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index:99;
+}
+#big{
+    height:250px;
+}
+#follow1 p {
+    font: 400 30px/1.5 'Pacifico', Helvetica, sans-serif;
+    color:#4db6ac;
+}
+
+#smallcard {
+        margin-top : -1px;
+}
+
+.comments {
+    margin-left:10px;
+    padding-left:15px;
+    width: 100%;
+    
+}
+form{
+    display:inline-block;
+}

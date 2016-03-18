@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>instaloud Search</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    {% load staticfiles %}
+    <script src="{%  static 'accounts/search_profile.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'accounts/search_profile.css' %}">
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="{% static 'accounts/soundcloud.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!--font-->
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    
+    
+    <header>
+        <div class='navbar-fixed'>
+            <nav id='nav'>
+                <!-- Dropdown Structure -->
+                <ul id="dropdown1" class="dropdown-content">
+                  <li><a href="/search/">Tracks</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/search_profile/">Profiles</a></li>
+                </ul>
+                
+                <div class="nav-wrapper teal lighten-1">
+                    <div class='container'>
+                    <a href="#" class="brand-logo left" style= "font: 400 38px/1.5 'Pacifico', Helvetica, sans-serif;">instaLoud</a>
+                    <a href="#" data-activates="mobile-demo" class="brand-logo right button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li id='homebutton'><a href="/"><i class="material-icons">home</i></a></li>
+                        <li id='addbutton'><a href="/add/"><i class="material-icons">add</i></a></li>
+                        <li id='profilebutton'><a href="/profile/{{user.username}}/"><i class="material-icons">account_circle</i></a></li>
+                        <!-- Dropdown Trigger -->
+                        <li class='active'><a class="dropdown-button" href="#!" data-activates="dropdown1" data-beloworigin="true"><i class="material-icons">search</i></a></li>
+                        <li id='logoutbutton'><a href="{% url 'logout' %}"><i class="material-icons">eject</i></a></li>
+                    </ul>
+                    <ul class="side-nav right" id="mobile-demo">
+                        <li id='homebutton'><a href="/"><i class="material-icons">home</i></a></li>
+                        <li id='addbutton'><a href="/add/"><i class="material-icons">add</i></a></li>
+                        <li id='profilebutton'><a href="/"><i class="material-icons">account_circle</i></a></li>
+                        <li id='searchbutton' class='active'><a href="/search/"><i class="material-icons">search</i></a></li>
+                        <li id='logoutbutton'><a href="{% url 'logout' %}"><i class="material-icons">eject</i></a></li>
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+   
+    
+    
+    
+<body>
+    <div class="container" style="margin-top:50px">
+      <nav>
+        <div class="nav-wrapper teal lighten-1">
+          <form action='/search_profile/' method='post' id='search'>
+              {% csrf_token %}
+            <div class="input-field">
+              <input id="search_input" type="search" placeholder="Search Profiles" name="profile">
+              <label for="search_input"><i class="material-icons">search</i></label>
+              <i class="material-icons">close</i>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+        {% for x in users %}
+        <h1>{{x}}</h1>
+        {% endfor %}
+        <div id='results'></div>
+    </div>
+</body>
+</html>

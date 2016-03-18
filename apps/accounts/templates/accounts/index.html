@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>instaLoud</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    {% load staticfiles %}
+    <link rel="icon" href="{% static 'accounts/music.ico' %}">
+    <script src="{%  static 'accounts/index.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'accounts/index.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!--font-->
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+
+    </head>
+<body>
+
+    <main>
+        <div class='container' id='main'>
+            <div class="row">
+                <div class="col s4 offset-s1 slider card-panel hoverable" id="slider">
+                    <ul class="slides">
+                      <li>
+                        <img src="http://is2.mzstatic.com/image/thumb/Music1/v4/d9/6d/eb/d96deb32-ded6-2721-5476-f21b292b9aab/source/600x600bb.jpg"> <!-- jcole -->
+                      </li>
+                      <li>
+                        <img src="http://images.complex.com/complex/image/upload/t_cmplx_featured_cover/Alabama-Shakes-Sound-Color-album-cover_mhi3m2.jpg"> <!-- alabama shakes -->
+                      </li>
+                      <li>
+                          <img src="http://is5.mzstatic.com/image/thumb/Music4/v4/5d/1f/56/5d1f56ae-fa9d-8ae4-724e-172504571be4/source/10000x10000bb.jpg"> <!--edsheeran -->
+                      </li>
+                      <li>
+                        <img src="http://is5.mzstatic.com/image/thumb/Music1/v4/dc/1d/80/dc1d8084-4240-606c-27d9-6eb0927c3839/source/10000x10000bb.jpg"> <!-- kendrick -->
+                      </li>
+                      <li>
+                        <img src="http://images.complex.com/complex/image/upload/t_cmplx_featured_cover/Drake-If-Youre-Reading-This-Its-Too-Late-album-cover_xwolg3.jpg"> <!-- drake -->
+                      </li>
+                      <li>
+                          <img src="http://is5.mzstatic.com/image/thumb/Music1/v4/27/9b/5e/279b5e45-e590-c661-c198-3242a6f76f62/source/10000x10000bb.jpg"> <!-- weeknd -->
+                      </li>
+                      <li>
+                          <img src="http://is5.mzstatic.com/image/thumb/Music5/v4/29/fa/b6/29fab67f-c950-826f-26a0-5eebcd0e262b/source/10000x10000bb.jpg"> <!--taylor -->
+                      </li>
+                      <li>
+                          <img src="http://is5.mzstatic.com/image/thumb/Music/v4/a5/68/9a/a5689a61-7966-7ac8-8217-e172cdd2575e/source/10000x10000bb.jpg"> <!--calvin harris -->
+                      </li>
+                    </ul>
+                </div> <!--end of slider-->
+
+
+
+                <div class="col s4 card-panel hoverable" id='login'> <!-- login box -->
+                    <!-- Modal 1 Trigger -->
+                    <h1 class="unselectable" style= "font: 400 45px/1.5 'Pacifico', Helvetica, sans-serif;">instaloud</h1>
+                    <a class="waves-effect waves-light btn modal-trigger" id='button' href="#modal1">Login </a>
+
+                    <!-- Modal 1 Structure -->
+                    <div id="modal1" class="modal modal-fixed-footer">
+                        <div class="modal-content">
+                            <h4 style="font: 400 45px/1.5 'Pacifico', Helvetica, sans-serif; color:#26a69a">Login</h4>
+                            <form action="{% url 'login' %}" method='post' id='login_form'>
+                            {% csrf_token %}
+                            <div class = 'input-field col s12'>
+                                <label for='username'>Username:</label>
+                                {{form_login.username}}
+                            </div>
+                            {{form_login.errors.username}}
+                            <div class = 'input-field col s12'>
+                                <label for='password'>Password:</label>
+                                {{form_login.password}}
+                            </div>
+                            {{form_login.errors.password}}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Modal 2 Trigger -->
+                    <a class="waves-effect waves-light btn modal-trigger" id='button' href="#modal2">Register </a>
+
+                    <!-- Modal 2 Structure -->
+                    <div id="modal2" class="modal modal-fixed-footer">
+                        <div class="modal-content">
+                            <h4 style="font: 400 45px/1.5 'Pacifico', Helvetica, sans-serif; color:#26a69a">register</h4>
+                            <form action="{% url 'register' %}" method='post'>
+                            {% csrf_token %}
+                            <div class = 'input-field col s12'>
+                                <label for='username'>Username:</label>
+                                {{form_reg.username}}
+                            </div>
+                            {{form_reg.errors.username}}
+                            <div class = 'input-field col s12'>
+                                <label for='first_name'>First Name:</label>
+                                {{form_reg.first_name}}
+                            </div>
+                            {{form_reg.errors.first_name}}
+                            <div class = 'input-field col s12'>
+                                <label for='last_name'>Last Name:</label>
+                                {{form_reg.last_name}}
+                            </div>
+                            {{form_reg.errors.last_name}}
+                            <div class = 'input-field col s12'>
+                                <label for='email'>Email Address:</label>
+                                {{form_reg.email}}
+                            </div>
+                            {{form_reg.errors.email}}
+                            <div class = 'input-field col s12'>
+                                <label for='password1'>Password:</label>
+                                {{form_reg.password1}}
+                            </div>
+                            {{form_reg.errors.password1}}
+                            <div class = 'input-field col s12'>
+                                <label for='password2'>Confirm Password:</label>
+                                {{form_reg.password2}}
+                            </div>
+                            {{form_reg.errors.password2}}
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i>
+                            </button>
+                            </form>
+                        </div>
+                    </div>
+                    <p>Dont have our App? Download it today!</p>
+                    <img src="https://instagramstatic-a.akamaihd.net/h1/images/appstore-install-badges/badge_ios_english-en.png/4b70f6fae447.png"></img>
+                </div> <!-- End of login box
+
+
+
+
+            </div> <!--end of main-->
+        </div>
+    </main>
+
+    <footer class="page-footer teal lighten-1 hoverable">
+        <div class="footer-copyright teal lighten-1">
+            <div class="container">
+        <a class="grey-text text-lighten-4 left" href="#!"><b>© 2016 instaloud by Necholas Gomez & Kevin Nguyen</b></a>
+            <a class="grey-text text-lighten-4 right" href="https://www.instagram.com/">Inspired by Instagram</a>
+            </div>
+        </div>
+    </footer>
+
+
+
+    {% if login_error %}
+       <script src="{% static 'accounts/login_modal.js' %}"></script>
+    {% elif reg_error %}
+       <script src="{% static 'accounts/reg_modal.js' %}"></script>
+    {% endif %}
+
+
+</body>
+</html>

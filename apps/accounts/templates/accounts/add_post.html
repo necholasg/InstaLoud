@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>instaLoud - Post a Song</title>
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    {% load staticfiles %}
+    <script src="{%  static 'accounts/add_post.js' %}"></script>
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="{% static 'accounts/soundcloud.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'accounts/add_post.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!--font-->
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+    
+    <header>
+        <div class='navbar-fixed'>
+            <nav id='nav'>
+                
+                <!-- Dropdown Structure -->
+                <ul id="dropdown1" class="dropdown-content">
+                  <li><a href="/search/">Tracks</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/search_profile/">Profiles</a></li>
+                </ul>
+                
+                <div class="nav-wrapper teal lighten-1">
+                    <div class='container'>
+                    <a href="#" class="brand-logo left" style= "font: 400 38px/1.5 'Pacifico', Helvetica, sans-serif;">instaLoud</a>
+                    <a href="#" data-activates="mobile-demo" class="brand-logo right button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li id='homebutton'><a href="/"><i class="material-icons">home</i></a></li>
+                        <li id='addbutton' class='active'><a href="#"><i class="material-icons">add</i></a></li>
+                        <li id='profilebutton'><a href="/profile/{{user.username}}/"><i class="material-icons">account_circle</i></a></li>
+                         <!-- Dropdown Trigger -->
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1" data-beloworigin="true"><i class="material-icons">search</i></a></li>
+                        <li id='logoutbutton'><a href="{% url 'logout' %}"><i class="material-icons">eject</i></a></li>
+                    </ul>
+                    <ul class="side-nav right" id="mobile-demo">
+                        <li id='homebutton'><a href="/"><i class="material-icons">home</i></a></li>
+                        <li id='addbutton' class='active'><a href="/"><i class="material-icons">add</i></a></li>
+                        <li id='profilebutton'><a href="/"><i class="material-icons">account_circle</i></a></li>
+                        <li id='searchbutton'><a href="/search/"><i class="material-icons">search</i></a></li>
+                        <li id='logoutbutton'><a href="{% url 'logout' %}"><i class="material-icons">eject</i></a></li>
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    
+    
+    
+<body>
+    <div class="container">
+            <div class="card large hoverable" id='info'>
+                <div class="row">
+                    <div class="col s4" id="album_cover">
+                        <img id="target_pic" src="http://www.shutterstock.com/music/static/1.0.37/implementation/images/album_artwork_placeholder_detail.jpg"></img>
+                    </div>
+                    <form action='/add/' method="post">
+                        {% csrf_token %}
+                    <div class="col s8">
+                      <div class= "input-field col s12">
+                          <label for="title">Title</label>
+                          {{form.title}}
+                      </div>
+                      {{form.errors.title}}
+                      <div class= "input-field col s12">
+                          <label for="artist">Artist</label>
+                          {{form.artist}}
+                      </div>
+                      {{form.errors.artist}}
+                      <div class= "input-field col s12">
+                          <input type='hidden' name='url_status' value="False" id="url_status">
+                          <label for="song_url">Song Url (Soundcloud)</label>
+                          {{form.song_url}}
+                      </div>
+                      {{form.errors.song_url}}
+                     </div>
+                    </div>
+                      <div class= "row">
+                          <div class="col s6 offset-s6">
+                              <button id="check_button" class="waves-effect waves-light btn right"><i class="material-icons right">done</i>Check URL</button>
+                          </div>
+                      </div>
+                     
+                  
+                  <div class="row">
+                      <div class="col s12">
+                   <div class= "input-field col s12">
+                      {{form.caption}}
+                  </div>
+                    </div>
+                    </div>
+            <div class="card-action">
+                <div class = "row">
+                <div class="left" id="errors">{{form.errors.url_status}}</div>
+                <input type="hidden" name="album_art" value="holder" id="album_art">
+                <button class="btn waves-effect waves-light right" type="submit" name="action">Post Song
+                <i class="material-icons right">send</i>
+                </div>
+                </button>
+            </div>
+                    </form>
+          </div>
+        </div>
+    </div>
+    
+
+
+
+
+</body>

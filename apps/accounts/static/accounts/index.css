@@ -1,0 +1,62 @@
+#main{
+    margin-top: 10%;
+}
+#slider {
+    border:solid 7.5px #26a69a;
+    border-radius:7.5px;
+}
+#login {
+    text-align: center;
+    margin-top: 5%;
+    border: solid 7.5px #26a69a;
+    border-radius: 7.5px;
+    margin-left:15px;
+    background-color: #e0f2f1;
+}
+#login img {
+    width:40%;
+    height:18%;
+}
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: #e0f2f1;
+}
+main {
+    flex: 1 0 auto;
+}
+
+#button{
+    padding:5px;
+    width: 33%;
+    height: 10%;
+}
+#nav img{
+    width:5%;
+    height:80%;
+    margin-top:.5%;
+}
+
+.errorlist {
+    margin-left:12.5px;
+    text-align:left;
+    color: #26a69a;
+    font-size: 13px;
+    font-weight:bold;
+}
+form{
+    text-align:left;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#modal1{
+    height:40%;
+}

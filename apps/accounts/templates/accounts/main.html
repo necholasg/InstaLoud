@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>instaLoud</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'accounts/main.css' %}">
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{%  static 'accounts/main.js' %}"></script>
+    <script src="https://connect.soundcloud.com/sdk/sdk-3.0.0.js"></script>
+    <script src="https://w.soundcloud.com/player/api.js"></script>
+    <script src="{% static 'accounts/soundcloud.js' %}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
+    <!--font-->
+    <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    </head>
+
+
+    <header>
+        <div class='navbar-fixed'>
+            <nav id='nav'>
+
+                <!-- Dropdown Structure -->
+                <ul id="dropdown1" class="dropdown-content">
+                  <li><a href="/search/">Tracks</a></li>
+                  <li class="divider"></li>
+                  <li><a href="/search_profile/">Profiles</a></li>
+                </ul>
+
+                <div class="nav-wrapper teal lighten-1">
+                    <div class='container'>
+                    <a href="#" class="brand-logo left" style= "font: 400 38px/1.5 'Pacifico', Helvetica, sans-serif;">instaLoud</a>
+                    <a href="#" data-activates="mobile-demo" class="brand-logo right button-collapse"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
+                        <li id='homebutton' class='active'><a href="/"><i class="material-icons">home</i></a></li>
+                        <li id='addbutton'><a href="/add/"><i class="material-icons">add</i></a></li>
+                        <li id='profilebutton'><a href="/profile/{{request.user.username}}/"><i class="material-icons">account_circle</i></a></li>
+                         <!-- Dropdown Trigger -->
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1" data-beloworigin="true"><i class="material-icons">search</i></a></li>
+                        <li id='logoutbutton'><a href="{% url 'logout' %}"><i class="material-icons">eject</i></a></li>
+                    </ul>
+                    <ul class="side-nav right" id="mobile-demo">
+                        <li id='homebutton' class='active'><a href="/"><i class="material-icons">home</i></a></li>
+                        <li id='addbutton'><a href="/add/"><i class="material-icons">add</i></a></li>
+                        <li id='profilebutton'><a href="/"><i class="material-icons">account_circle</i></a></li>
+                        <li id='searchbutton'><a href="/search/"><i class="material-icons">search</i></a></li>
+                        <li id='logoutbutton'><a href="{% url 'logout' %}"><i class="material-icons">eject</i></a></li>
+                    </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+
+<body>
+    <div class='container'>
+        {% for post in creators_posts %}
+        <div class='container'>
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card hoverable" style="margin-top: 50px">
+                <div class="card-content">
+                    <a href="/profile/{{post.user.username}}/"><span class="card-title teal-text text-lighten-1" style="font: 400 30px 'Pacifico', Helvetica, sans-serif;">{{post.user.username}}</span></a><br>
+                    <img src="{{post.album_art}}" style="height:200px; width:200px; display:inline-block"><blockquote class="right"><p>{{post.artist}}</p><p>{{post.title}}</p></blockquote>
+                    <div class="teal-text text-lighten-2" style="display: block">
+                        <div class="row">
+                    <div class="chip"><a class="teal-text text-lighten-2" href="/profile/{{post.user.username}}">{{post.user.username}}</a></div>{{post.caption}}
+                    </div>
+                  </div><hr>
+                <div id='comments{{post.id}}' class='comments'>
+                    {% for comment in comments %}
+                    {% if comment.post.id == post.id %}
+                    <div class="row">
+                    <div class="chip"><a class="teal-text text-lighten-2" href="/profile/{{comment.user.username}}">{{comment.user.username}}</a></div>{{comment.content}}
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <br>
+                <form id="comment_button" class="comment_button" method="post" action="/comment/" style="display:inline" name='card{{post.id}}' user="{{request.user.username}}" post_id="{{post.id}}">
+                    {% csrf_token %}
+                <input type='text' id='{{post.id}}' name='comment' style="padding-left:1px; margin-right:5px; width:85%; border: 1px solid #26a69a;height:35px" placeholder="Add a comment">
+                <input type="hidden" name="post_id" value='{{post.id}}'>
+                <button post_id = "{{post.id}}" class="waves-effect waves-light btn"><i class="large material-icons">comment</i></button>
+                </form>
+                </div>
+                <div class="card-action">
+                {% if post.id in liked_posts %}
+                {% for key,value in like_counter.items %}
+                {% if key == post.id %}
+                <button post_id = "{{post.id}}" like_counter = "{{value}}"class="waves-effect waves-light btn-large red lighten-1"><i class="large material-icons center">whatshot</i>
+                    {{value}}
+                {% endif %}
+                {% endfor %}</button>
+                {% else %}
+                <form action="/like/" class='like_form' post_id = "{{post.id}}" method="post">
+                    <input type="hidden" name="post_id" value="{{post.id}}">{% csrf_token %}
+                    {% if post.id in like_counter %}
+                     {% for key,value in like_counter.items %}
+                         {% if key == post.id %}
+                        <button type='submit' like_counter = "{{value}}" name ='post_id' id="like_button" post_id = "{{post.id}}"class="like_button waves-effect waves-light btn-large"><i class="large material-icons center">whatshot</i>
+                            {{value}}
+                        {% endif %}
+                    {% endfor %}
+                    {% else %}
+                    <button type='submit' like_counter = "0" name ='post_id' id="like_button" post_id = "{{post.id}}"class="like_button waves-effect waves-light btn-large"><i class="large material-icons center">whatshot</i></button>
+                    {% endif %}
+                </form>
+                {% endif %}
+
+                  <button id="play_button" class="waves-effect waves-light btn-large right" url = '{{post.song_url}}'>Play<i class="large material-icons right">play_circle_outline</i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+
+
+    </div>
+    
+        <div id = "widget">
+        </div>
+</body>
